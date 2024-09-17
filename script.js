@@ -57,8 +57,27 @@ async function run() {
         },
       },
     );
+    await oldUser.populate("bestFriend");
 
-    console.log(await oldUser.populate("bestFriend"));
+    // method defined in the user schema
+    // oldUser.sayHi();
+
+    // using the static method defined in the schema
+    const Isaacs = await User.findByName("isaac");
+    // console.log(Isaacs);
+
+    // using the queries methods defined in the userSchema;
+    const theIsaacs = await User.find().byName("isaac");
+    // console.log(theIsaacs);
+
+    // using the virtual property;
+    const response = await User.findOne({
+      name: { $ne: null },
+      email: { $ne: null },
+    });
+
+    console.log(response);
+    // console.log(await response.namedEmail);
   } catch (error) {
     console.log(error.message);
   }
